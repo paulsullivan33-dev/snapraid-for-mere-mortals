@@ -1,0 +1,11 @@
+# Delete a file, sync nothing, then fix
+$ ls disk2/music
+new-track.flac.bin
+$ snapraid --test-skip-device -c snapraid.conf fix
+fix exit=0
+recovered music/concert.flac.bin
+      12 soft errors
+       0 io errors
+       0 data errors
+$ sha256sum -c (the deleted file, back again)
+disk2/music/concert.flac.bin: OK

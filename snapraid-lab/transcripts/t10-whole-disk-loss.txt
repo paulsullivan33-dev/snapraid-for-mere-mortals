@@ -1,0 +1,15 @@
+# Simulate a dead disk: everything on d2 vanishes, replaced by an empty directory
+$ snapraid --test-skip-device -c snapraid.conf fix
+fix exit=0
+1%, 0 MB26%, 3 MBrecovered movies/birthday.mp4.bin
+recovered music/concert.flac.bin
+recovered music/new-track.flac.bin
+      51 recovered errors
+       0 unrecoverable errors
+       0 unrecoverable errors
+Everything OK
+$ sha256sum -c (every d2 file rebuilt from parity)
+disk2/movies/birthday.mp4.bin: OK
+disk2/movies/captions.txt: FAILED open or read
+disk2/music/concert.flac.bin: OK
+disk2/music/new-track.flac.bin: OK

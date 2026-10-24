@@ -1,0 +1,10 @@
+$ snapraid --test-skip-device -c snapraid.conf scrub -p 100 -o 0
+
+Saving state to /home/hatch/workspace/snapraid-lab-work/disk1/snapraid.content...
+Saving state to /home/hatch/workspace/snapraid-lab-work/disk2/snapraid.content...
+Saved state in 0 seconds
+Verifying...
+Verified /home/hatch/workspace/snapraid-lab-work/disk1/snapraid.content in 0 seconds
+Verified /home/hatch/workspace/snapraid-lab-work/disk2/snapraid.content in 0 seconds
+Everything OK
+exit=0

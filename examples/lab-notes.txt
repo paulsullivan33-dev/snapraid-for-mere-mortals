@@ -1,0 +1,71 @@
+SnapRAID lab notes
+==================
+Version run: SnapRAID 15.0, compiled from the
+project's release tarball (configure + make) in
+this sandbox. Ubuntu's package was noted as older;
+the source build was the verified path.
+
+Array: two "data disks" and one "parity disk" as
+directories on one filesystem, plus a second
+parity directory for the dual-parity chapter.
+Because the members share a device, every command
+carries --test-skip-device (SnapRAID's own test
+option); t12 captures the refusal without it.
+
+Fixtures (all invented, general purpose):
+  disk1: photos/holiday-snaps.bin (6 MB random),
+         photos/family-video.bin (4 MB random),
+         notes.txt (a shopping list)
+  disk2: movies/birthday.mp4.bin (8 MB random),
+         movies/captions.txt (a seed catalogue),
+         music/concert.flac.bin (3 MB random),
+         music/new-track.flac.bin (2 MB, added in t04)
+sha256 of every file recorded before SnapRAID ran
+(checksums-before.txt), and again for the rebuilt
+dual-parity array (checksums-dual.txt).
+
+What ran, in order (transcripts in snapraid-lab/transcripts/):
+  t00 version output
+  t01 fixtures created; checksums recorded
+  t02 first sync: parity file 13,631,488 bytes,
+      content files 1,931 bytes each, "Everything OK"
+  t03 status: array picture, "No error detected"
+  t04 diff after adding one file (exit 2, "1 updated");
+      second sync clean; checksums regenerated
+  t05 scrub -p 100 -o 0: clean
+  t06 check: clean, 24 MB accessed
+  t07 corruption: 4 bytes overwritten mid-file with dd;
+      check fails (exit 1, "DANGER! Unexpected silent
+      data errors! 1 data errors"); fix recovers the
+      file; sha256 OK again
+  t08 file deleted (no sync): fix recovers it; sha256 OK
+  t09 file deleted, THEN sync: fix finds nothing;
+      the deletion was made permanent by the sync
+  t10 whole data disk emptied: fix rebuilds all four
+      files from parity; content copy on the dead disk
+      replaced by a survivor's; sha256 all OK
+      (except captions.txt, already gone since t09)
+  t11 dual parity: adding 2-parity to the running array
+      (array first reset to a healthy single-parity state
+      with the full original file set). A plain sync
+      refuses with instructions; --force-full sync builds
+      the second parity (both parity files 13,631,488
+      bytes). Then a d1 file is corrupted AND d2 wiped
+      at the same time: fix recovers everything,
+      sha256 all OK.
+  t12 without the test flag: sync refuses with
+      "on the same device" (exit 1); status refuses
+      with "at least 2 'content' files in different
+      disks" (exit 1)
+
+Exit codes observed: sync ok 0; diff clean 0 /
+differences 2; check clean 0 / errors 1; refusals 1.
+
+Not run (documented-only in the guide):
+  - smart, probe, spindown: no real disks in the lab
+  - pool, split parity, 3-parity and above
+  - Windows builds
+  - crash-mid-sync recovery (autosave/resume)
+  - cron/systemd scheduling itself (pattern only)
+  - MergerFS pairing
+Sizes are megabytes; no performance claims are made.

@@ -1,0 +1,53 @@
+$ snapraid --test-skip-device -c snapraid.conf sync
+Self-test...
+Loading state from /home/hatch/workspace/snapraid-lab-work/disk1/snapraid.content...
+WARNING! Content file '/home/hatch/workspace/snapraid-lab-work/disk1/snapraid.content' not found, attempting with another copy...
+Loading state from /home/hatch/workspace/snapraid-lab-work/disk2/snapraid.content...
+No content file found. Assuming empty.
+Scanning...
+Scanned d1 in 0 seconds
+Scanned d2 in 0 seconds
+Applying...
+WARNING! UUID is unsupported for disks: 'd1', 'd2'. Not using inodes to detect move operations.
+Using 0 MiB of memory for the file-system.
+Initializing...
+Resizing...
+Saving state to /home/hatch/workspace/snapraid-lab-work/disk1/snapraid.content...
+Saving state to /home/hatch/workspace/snapraid-lab-work/disk2/snapraid.content...
+Saved state in 0 seconds
+Verifying...
+Verified /home/hatch/workspace/snapraid-lab-work/disk2/snapraid.content in 0 seconds
+Verified /home/hatch/workspace/snapraid-lab-work/disk1/snapraid.content in 0 seconds
+Using 48 MiB of memory for 64 cached blocks.
+Selecting...
+Syncing...
+1%, 0 MB100% completed, 24 MB accessed in 0:00
+
+     d1 49% | *********************************
+     d2 35% | ***********************
+ parity  0% | 
+   raid  0% | 
+   hash  1% | *
+  sched 17% | ***********
+   misc  0% | 
+            |____________________________________________________________________
+                              wait time (total, less is better)
+
+Saving state to /home/hatch/workspace/snapraid-lab-work/disk1/snapraid.content...
+Saving state to /home/hatch/workspace/snapraid-lab-work/disk2/snapraid.content...
+Saved state in 0 seconds
+Verifying...
+Verified /home/hatch/workspace/snapraid-lab-work/disk1/snapraid.content in 0 seconds
+Verified /home/hatch/workspace/snapraid-lab-work/disk2/snapraid.content in 0 seconds
+Everything OK
+exit=0
+
+$ ls -la the parity dir and the content files
+-rw------- 1 root nogroup 1931 Oct 24 04:09 disk1/snapraid.content
+-rw------- 1 root nogroup 1931 Oct 24 04:09 disk2/snapraid.content
+
+parity/:
+total 13316
+drwxrws--- 1 root nogroup       30 Oct 24 04:09 .
+drwxrws--- 1 root nogroup      104 Oct 24 04:09 ..
+-rw------- 1 root nogroup 13631488 Oct 24 04:09 snapraid.parity

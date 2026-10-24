@@ -1,0 +1,55 @@
+# Reset array, healthy single-parity baseline
+$ snapraid --test-skip-device -c snapraid.conf sync
+WARNING! Content file '/home/hatch/workspace/snapraid-lab-work/disk1/snapraid.content' not found, attempting with another copy...
+No content file found. Assuming empty.
+WARNING! UUID is unsupported for disks: 'd1', 'd2'. Not using inodes to detect move operations.
+Verified /home/hatch/workspace/snapraid-lab-work/disk2/snapraid.content in 0 seconds
+Everything OK
+
+# Point the config at a second, empty parity file and sync: refused, with instructions
+$ snapraid --test-skip-device -c snapraid-dual.conf sync
+DANGER! One or more the parity files are smaller than expected!
+It's possible that the parity disks are not mounted.
+If instead you are adding a new 2-Parity level, initialize it with
+'snapraid -d 2-parity fix', and then run 'snapraid sync'.
+Alternatively, use 'snapraid --force-full sync' to rebuild all parity levels.
+exit=1
+
+# Follow the instructions: rebuild all parity levels from scratch
+$ snapraid --test-skip-device -c snapraid-dual.conf --force-full sync
+WARNING! UUID is unsupported for disks: 'd1', 'd2'. Not using inodes to detect move operations.
+WARNING! The 2-Parity parity has only 0 blocks instead of 52.
+Verified /home/hatch/workspace/snapraid-lab-work/disk2/snapraid.content in 0 seconds
+Everything OK
+parity/:
+total 13320
+drwxrws--- 1 root nogroup       30 Oct 24 04:11 .
+drwxrws--- 1 root nogroup      210 Oct 24 04:11 ..
+-rw------- 1 root nogroup 13631488 Oct 24 04:11 snapraid.parity
+
+parity2/:
+total 13320
+drwxrws--- 1 root nogroup       30 Oct 24 04:11 .
+drwxrws--- 1 root nogroup      210 Oct 24 04:11 ..
+-rw------- 1 root nogroup 13631488 Oct 24 04:11 snapraid.parity
+
+# Two failures at once: corrupt a file on d1 and wipe d2 entirely
+$ snapraid --test-skip-device -c snapraid-dual.conf fix
+fix exit=0
+1%, 0 MBrecovered photos/holiday-snaps.bin
+44%, 6 MBrecovered movies/birthday.mp4.bin
+recovered movies/captions.txt
+recovered music/concert.flac.bin
+recovered music/new-track.flac.bin
+      53 recovered errors
+       0 unrecoverable errors
+       0 unrecoverable errors
+Everything OK
+$ sha256sum -c checksums-dual.txt
+disk1/photos/family-video.bin: OK
+disk1/photos/holiday-snaps.bin: OK
+disk1/notes.txt: OK
+disk2/movies/birthday.mp4.bin: OK
+disk2/movies/captions.txt: OK
+disk2/music/concert.flac.bin: OK
+disk2/music/new-track.flac.bin: OK

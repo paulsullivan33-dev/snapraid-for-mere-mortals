@@ -1,0 +1,2 @@
+$ snapraid --version
+SnapRAID CLI v15.0 by Andrea Mazzoleni, https://www.snapraid.it

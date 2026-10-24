@@ -1,0 +1,10 @@
+# Troubleshooting capture: the same commands WITHOUT the lab flag, on plain directories
+$ snapraid -c snapraid.conf sync
+Self-test...
+Disks '/home/hatch/workspace/snapraid-lab-work/disk1/' and '/home/hatch/workspace/snapraid-lab-work/disk2/' are on the same device.
+exit=1
+
+$ snapraid -c snapraid.conf status
+WARNING! Content files on the same disk: '/home/hatch/workspace/snapraid-lab-work/disk1/snapraid.content' and '/home/hatch/workspace/snapraid-lab-work/disk2/snapraid.content'.
+You must have at least 2 'content' files in different disks.
+exit=1

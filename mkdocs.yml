@@ -1,0 +1,27 @@
+site_name: SnapRAID for Mere Mortals
+site_description: Plain-language disk protection for arrays of big, rarely changing files. Parity explained without the RAID folklore, a config you write yourself, sync and scrub as habits, and recovery rehearsed on a real array before you need it.
+site_url: https://paulsullivan33-dev.github.io/snapraid-for-mere-mortals/
+
+# Guides live at the repo root (nice for GitHub browsing).
+# The deploy workflow copies them into docs/ before building.
+theme:
+  name: material
+
+nav:
+  - Home: index.md
+  - What SnapRAID Is: what-snapraid-is.md
+  - The Moving Parts: the-moving-parts.md
+  - Installing SnapRAID: installing-snapraid.md
+  - Writing the Config: writing-the-config.md
+  - Your First Sync: your-first-sync.md
+  - Checking and Scrubbing: checking-and-scrubbing.md
+  - Recovering Files: recovering-files.md
+  - More Parity: more-parity.md
+  - Automating SnapRAID: automating-snapraid.md
+  - Changing the Array: changing-the-array.md
+  - Recipes: recipes.md
+  - The Neighbours: the-neighbours.md
+  - Limits: limits.md
+  - Troubleshooting: troubleshooting.md
+  - Glossary: glossary.md
+  - Writing Criteria: criteria.md

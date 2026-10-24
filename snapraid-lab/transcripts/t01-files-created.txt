@@ -1,0 +1,8 @@
+# Create files on the two data disks
+$ sha256sum of every file (the before picture)
+624b7d80a679eb651ac55f361bd1a3b6ab53e9528a9e865a90d48568ed8c65ba  disk1/photos/family-video.bin
+e69b9233c348f172ac138321c1268b8ce3c3d88a8dd51c3cfbfe1795365ad22b  disk1/photos/holiday-snaps.bin
+e100abc42ed836e5f28368730633d2e4af05a9a7cb2eee682f1253175a26354a  disk1/notes.txt
+2da90997ceb4b7975f0e56145e9ebbf941e0a223736922cd13f9a0b121c10353  disk2/movies/birthday.mp4.bin
+b21d5761a66d078c176e05a3796f8ce8646f2c4e497c02274485c4e337d2e111  disk2/movies/captions.txt
+ed90ec4996cfe313836d1b8d02784e071e180dcbd77739a3be5c29652389be4b  disk2/music/concert.flac.bin

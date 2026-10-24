@@ -1,0 +1,30 @@
+# SnapRAID command sheet (distilled)
+# -c names the config in every line, on purpose.
+# In the lab, every command also carried --test-skip-device;
+# on real disks you must NOT (see installing-snapraid.md).
+
+# Prove the install
+snapraid --version
+
+# The daily rhythm (chapter 5)
+snapraid -c snapraid.conf diff
+snapraid -c snapraid.conf sync
+snapraid -c snapraid.conf status
+
+# Verification (chapter 6)
+snapraid -c snapraid.conf scrub          # default plan: 8%, stale blocks first
+snapraid -c snapraid.conf scrub -p 100 -o 0   # everything, now (small arrays)
+snapraid -c snapraid.conf check          # full audit, on suspicion
+
+# Recovery (chapter 7)
+snapraid -c snapraid.conf fix            # repair everything found
+snapraid -c snapraid.conf fix -d d2      # only disk d2
+snapraid -c snapraid.conf fix -f photos/ # only matching files
+
+# Adding a second parity (chapter 8)
+snapraid -c snapraid-dual.conf --force-full sync
+
+# Maintenance from the manual (not run in the lab)
+snapraid -c snapraid.conf touch          # re-stamp zero-timestamp files
+snapraid -c snapraid.conf smart          # disk health report (real disks only)
+snapraid -c snapraid.conf pool           # build the symlink merged view

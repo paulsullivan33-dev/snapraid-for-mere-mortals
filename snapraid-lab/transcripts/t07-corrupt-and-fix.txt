@@ -1,0 +1,27 @@
+# Corrupt one file in place: flip bytes in the middle of family-video.bin
+$ sha256sum disk1/photos/family-video.bin (no longer matches t01)
+6c742017b07bc1ba3b1fc705c1e54479c1a5e7101c4c09130b32fafffc3a66e5  disk1/photos/family-video.bin
+624b7d80a679eb651ac55f361bd1a3b6ab53e9528a9e865a90d48568ed8c65ba  disk1/photos/family-video.bin
+
+$ snapraid --test-skip-device -c snapraid.conf check
+check exit=1
+DANGER! Unexpected silent data errors!
+       0 soft errors
+       0 io errors
+       1 data errors
+       0 unrecoverable errors
+       0 io errors
+       1 data errors
+       0 unrecoverable errors
+
+$ snapraid --test-skip-device -c snapraid.conf fix
+fix exit=0
+Fixing...
+1%, 0 MBrecovered photos/family-video.bin
+       1 recovered errors
+       0 unrecoverable errors
+       0 unrecoverable errors
+Everything OK
+
+$ sha256sum -c against the before picture
+disk1/photos/family-video.bin: OK
